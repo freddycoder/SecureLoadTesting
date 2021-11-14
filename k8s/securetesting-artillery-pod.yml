@@ -1,0 +1,40 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: securetesting-artillery
+  labels:
+    app: securetesting-artillery
+spec:
+  containers:
+  - name: securetesting-artillery
+    image: erabliereapi/securetesting-artillery:initial
+    command: 
+      - /bin/sh
+      - -c
+      - |
+        #!/bin/sh
+        PASSWORD=$(dotnet /app/ReadPassword.dll)
+        ARGPREFIX={\"Arg1\":\"
+        ARGPOSTFIX=\"}
+        ARGS=$ARGPREFIX$PASSWORD$ARGPOSTFIX
+        artillery run /testing/example/artyllery.yml -v $ARGS
+        sleep 60
+    env:
+    - name: REPRT_SECRET
+      value: /app/secrets
+    - name: SECRET_FILE_NAME
+      value: password
+    volumeMounts:
+    - name: securetesting-secret
+      mountPath: /app/secrets
+      readOnly: true
+    - name: securetesting-test-examples
+      mountPath: /testing/example
+      readOnly: true
+  volumes:
+  - name: securetesting-secret
+    secret:
+      secretName: password-secret
+  - name: securetesting-test-examples
+    configMap:
+      name: securetesting-example

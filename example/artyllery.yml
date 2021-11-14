@@ -1,0 +1,13 @@
+config:
+  target: "https://www.google.com"
+  ensure:
+    maxErrorRate: 0.01
+  phases:
+    - duration: 3
+      arrivalRate: 1
+      name: make few requests
+scenarios:
+  - name: "Google search"
+    flow:
+      - get:
+          url: "/search?q={{arg1}}"

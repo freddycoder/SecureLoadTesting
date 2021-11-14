@@ -1,0 +1,37 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: securetesting-k6
+  labels:
+    app: securetesting-k6
+spec:
+  containers:
+  - name: securetesting-k6
+    image: erabliereapi/securetesting-k6:initial
+    command: 
+      - /bin/sh
+      - -c
+      - |
+        #!/bin/sh
+        PASSWORD=$(dotnet /app/ReadPassword.dll)
+        k6 run -e Arg1=$PASSWORD /testing/example/k6.js
+        sleep 60
+    env:
+    - name: REPRT_SECRET
+      value: /app/secrets
+    - name: SECRET_FILE_NAME
+      value: password
+    volumeMounts:
+    - name: securetesting-secret
+      mountPath: /app/secrets
+      readOnly: true
+    - name: securetesting-test-examples
+      mountPath: /testing/example
+      readOnly: true
+  volumes:
+  - name: securetesting-secret
+    secret:
+      secretName: password-secret
+  - name: securetesting-test-examples
+    configMap:
+      name: securetesting-example

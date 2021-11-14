@@ -12,4 +12,4 @@ var path = Path.Combine(directory, filename);
 var secret = File.ReadAllText(path);
 
 // Print the password
-Console.WriteLine(secret);
+Console.Write(secret.Trim());
