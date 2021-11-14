@@ -1,0 +1,9 @@
+.git
+.github
+.gitattributes
+**/bin
+**/obj
+**/node_modules
+**/node_modules/*
+.env
+.vs
