@@ -1,6 +1,6 @@
 # Secure testing
 
-Some docker images containing tools for testing and dotnet runtime to securly manage password read from secret in k8s cluster. 
+Some docker images containing tools for testing and the dotnet runtime to securely manage password read from a secret in k8s cluster
 
 > Code in this repo is a POC. Secret should not be pass into query string, or simply store as base64 string. Normally, the secret would be encrypted and the c# program should decrypt the password. The secret value can be for example the password of the OIDC client that use client credential flow.
 
