@@ -33,3 +33,12 @@ COPY --from=dotnet-build-env /app/out ./
 
 # Install the latest version of artillery
 RUN npm install -g artillery
+
+# Create a new user (artillery) and new group (testtools)
+RUN adduser -D artillery && addgroup testtools
+
+# Give permission to the artillery to use /.cache directory
+RUN mkdir /.cache && chown -R artillery:testtools /.cache
+
+# then switch into that user’s context
+USER artillery:testtools

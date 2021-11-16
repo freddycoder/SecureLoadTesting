@@ -20,3 +20,9 @@ COPY --from=dotnet-build-env /app/out ./
 
 # Install the latest version of k6
 COPY --from=k6official /usr/bin/k6 /usr/bin/k6
+
+# Create a new user (k6) and new group (testtools)
+RUN adduser -D k6 && addgroup testtools
+
+# then switch into that user’s context
+USER k6:testtools

@@ -33,3 +33,9 @@ COPY --from=dotnet-build-env /app/out ./
 
 # Install the latest version of artillery
 RUN npm install -g newman
+
+# Create a new user (newman) and new group (testtools)
+RUN adduser -D newman && addgroup testtools
+
+# then switch into that user’s context
+USER newman:testtools

@@ -10,4 +10,4 @@ scenarios:
   - name: "Google search"
     flow:
       - get:
-          url: "/search?q={{arg1}}"
+          url: "/search?q={{Arg1}}"
