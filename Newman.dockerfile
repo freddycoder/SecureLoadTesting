@@ -31,7 +31,7 @@ ENV PATH="${PATH}:${DOTNET_ROOT}"
 WORKDIR /app
 COPY --from=dotnet-build-env /app/out ./
 
-# Install the latest version of artillery
+# Install the latest version of newman
 RUN npm install -g newman
 
 # Create a new user (newman) and new group (testtools)
